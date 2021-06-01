@@ -1,13 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/button"
 /**
  * CompanyCard
  *  Prop: company: {handle,name, description, numEmployees, logoUrl}
  *            
  *  basic component to visualize details of a single company
  */
-function CompanyCard({ name, description, logoUrl }) {
+function CompanyCard({ name, description, logoUrl, handle }) {
 
   return (
 
@@ -18,7 +18,7 @@ function CompanyCard({ name, description, logoUrl }) {
         <Card.Text>
           {description}
     </Card.Text>
-    <Button variant="primary">View {name}</Button>
+    <Link className="btn btn-primary" to={`companies/${handle}`}>View {name}</Link>
     </Card.Body>
     </Card>)
 }

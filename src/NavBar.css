@@ -1,0 +1,12 @@
+.NavBar {
+    border-bottom: 2px solid;
+}
+
+.NavBar a {
+    padding: 5px;
+    text-decoration: none;
+}
+
+.NavBar a.active {
+    font-weight:bold;
+}

@@ -1,10 +1,17 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
-
+/**
+ * NavBar
+ *  Props: currentUser
+ * 
+ * will render full navBar if current user is defined(logged in)
+ * will only render login/signup buttons if no currentUser
+ */
 function NavBar(){
+  
   return (
-    <nav className="NavBar">
+    <nav className="NavBar navbar-md bg-light">
       <NavLink exact to="/">
         Jobly
       </NavLink>
@@ -20,10 +27,11 @@ function NavBar(){
       <NavLink exact to="/profile">
         Profile
       </NavLink>
-      <NavLink exact to="/logout?">
+      <NavLink  className="" exact to="/logout?">
         Logout
       </NavLink>
     </nav>
+      
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import JoblyApi from "./api";
+import JobCard from "./JobCard";
 
 /** Renders a companies details with job listing
  * 
@@ -13,6 +14,7 @@ import JoblyApi from "./api";
 function CompanyDetail(){
   const { name } = useParams();
   const [company, setCompany] = useState({});
+  const [jobs, setJobs] = useState([]);
 
   // get information on individual company from api
   useEffect(function getCompanyFromApi() {
@@ -23,10 +25,29 @@ function CompanyDetail(){
     getCompany();
   }, []);
 
+  // get companies by company handle
+  useEffect(function getCompanyJobsFromApi() {
+    async function getCompanyJobs() {
+      let companyJobs = await JoblyApi.getJobsByCompany(company.handle);
+      setJobs(companyJobs);
+    }
+    getCompanyJobs();
+  }, [company]);
+
+  const companyJobCards = jobs.map(j =>
+    <JobCard
+      key={j.id}
+      title={j.title}
+      salary={j.salary}
+      equity={j.equity}
+      compHandle={j.companyHandle}
+    />)
+
   return (
     <div>
       <h2>{company.name}</h2>
       <p>{company.description}</p>
+      { companyJobCards }
     </div>
   )
 }

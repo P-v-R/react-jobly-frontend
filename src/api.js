@@ -68,7 +68,16 @@ class JoblyApi {
 
 
   /** get array of jobs from one specific company */
-
+  static async getJobsByCompany(handle) {
+    let companiesByCompanyHandle = []
+    let res = await this.request('jobs');
+    res.jobs.map(j => {
+      if (j.companyHandle === handle) {
+        (companiesByCompanyHandle.push(j))
+      }
+    });
+    return companiesByCompanyHandle;
+  }
 
 
 

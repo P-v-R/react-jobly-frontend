@@ -23,7 +23,8 @@ function CompanyList() {
   const [companies, setCompanies] = useState([])
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   console.log("companyList errors-->", errors);
   console.log("companyList searchTerm-->", searchTerm);
   console.log("companyList companies-->", companies);
@@ -36,6 +37,7 @@ function CompanyList() {
       try {
         const companiesResp = await JoblyApi.getAllCompanies(searchTerm);
         setCompanies(companiesResp);
+        setIsLoading(false);
       } catch (err) {
         setErrors(err);
       }
@@ -50,6 +52,7 @@ function CompanyList() {
   // and set searchTerm state with said value
   function searchCompany(searchedTerm) {
     setSearchTerm(searchedTerm);
+    setIsLoading(true);
   }
 
   // TODO: Add logo file and update logoUrl
@@ -65,17 +68,18 @@ function CompanyList() {
       handle={c.handle}
     />);
   
+    if (isLoading) return <div></div>;
     // TODO: pass searchterm into search for for initial value
     // TODO: ternary for line 86-88
   return (
     <div>
       { errors ? errors.map(err => <Alert variant="danger">{err}</Alert>) : null }
       <SearchForm search={searchCompany}/>
-      {companyCards.length === 0 && 
-        <h3>No Companies Found</h3>}
-      {companyCards}
+      {(companyCards.length === 0) ?
+        <h3>No Companies Found</h3> :
+        companyCards}
     </div>
-  )
+  );
 }
 
 export default CompanyList;

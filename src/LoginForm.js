@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 
 
 function LoginForm() {
-  const [loginFormData, setLoginFormData] = useState([])
-  console.log("loginFormData ==>", loginFormData)
+  const [loginFormData, setLoginFormData] = useState({"username":"", "password":""})
+
 
   // handle/control user inputs
   function handleChange(evt) {
@@ -19,45 +20,37 @@ function LoginForm() {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-
+    console.log("This is what will be submitted =>", loginFormData)
   }
 
 
   return (
-    <Container>
-      <form className="LoginForm" onSubmit={handleSubmit}>
-
-        <div class="form-floating mb-3">
-          <input
-            type="text"
-            className="form-control"
-            id="floatingInput"
+    <Container fluid="sm">
+      <Form className="LoginForm" onSubmit={handleSubmit}>
+        <div className="form-floating mb-3">
+          <Form.Control
+            type="username"
             placeholder="username"
             name="username"
             value={loginFormData["username"]}
-            onChange={handleChange}
-            type="search"  />
-          <label className="label"> Username:</label>
+            onChange={handleChange} />
+          <Form.Label>Username</Form.Label>
         </div>
-
-        <div class="form-floating mb-3">
-          <input
+        <div className="form-floating mb-3">
+          <Form.Control
             type="password"
-            className="form-control"
-            id="floatingPassword"
-            placeholder=""
+            placeholder="Password"
             name="password"
             value={loginFormData["password"]}
-            onChange={handleChange}
-            type="search" />
-          <label for="floatingPassword"> Password:</label>
+            onChange={handleChange} />
+          <Form.Label>Password</Form.Label>
         </div>
-
-        <button className="btn">
-          click me!
-        </button>
-
-      </form>
+        <Button 
+        variant="primary" 
+        onClick={handleSubmit}>
+          Submit
+        </Button>
+      </Form>
     </Container>
   );
 }

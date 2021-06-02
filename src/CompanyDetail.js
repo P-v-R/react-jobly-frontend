@@ -23,7 +23,7 @@ function CompanyDetail(){
       setCompany(companyDetail);
     }
     getCompany();
-  }, []);
+  }, [name]);
 
   // get companies by company handle
   useEffect(function getCompanyJobsFromApi() {

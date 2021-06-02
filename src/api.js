@@ -20,8 +20,8 @@ class JoblyApi {
     const url = `${BASE_URL}/${endpoint}`;
     const headers = { Authorization: `Bearer ${JoblyApi.token}` };
     const params = (method === "get")
-        ? data
-        : {};
+      ? data
+      : {};
 
     try {
       return (await axios({ url, method, data, params, headers })).data;
@@ -43,22 +43,46 @@ class JoblyApi {
   }
 
   /** Get array of all companies */
-  static async getAllCompanies(){
+  static async getAllCompanies() {
     let res = await this.request('companies');
-    return res.companies
+    return res.companies;
   }
 
-  static async searchCompanies(searchTerm) {
-    let res = await this.request(`companies/?name=${searchTerm}`)
-    return res.companies
+  /** Get array of companies that match search 
+   * criteria for query /?name=... */
+  static async searchCompaniesByName(searchTerm) {
+    let res = await this.request(`companies/?name=${searchTerm}`);
+    return res.companies;
   }
 
 
+  //---------------------------------JOBS-----------------------------------
+
+
+  /** Get array of all jobs */
+
+  static async getAllJobs() {
+    let res = await this.request('jobs');
+    return res.jobs;
+  }
+
+
+  /** get array of jobs from one specific company */
+
+
+
+
+  /** Get array of jobs matching searchTerm*/
+  
+  static async searchJobsByTitle(searchTerm) {
+    let res = await this.request(`jobs/title=${searchTerm}`);
+    return res.jobs;
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)
 JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+  "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+  "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;

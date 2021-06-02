@@ -1,8 +1,6 @@
-.NavBar a {
-    padding: 5px;
-    text-decoration: none;
+.navbar{
+  background-color: #add6e9;
+  margin-bottom: 1%;
 }
 
-.NavBar a.active {
-    font-weight:bold;
-}
+

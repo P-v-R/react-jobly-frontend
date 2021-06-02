@@ -6,40 +6,48 @@ const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-gr
 
 /**
  * CompanyList
- * State: companies - all company objects in one big array
+ * State: companies - all company objects in one array
+ *        searchTerm - the user input being searched for 
+ *                      when <SearchForm /> is submitted
  * 
- * Route --> CompanyList --> CompanyCard
+ * Route --> CompanyList --> SearchForm --> CompanyCard
+ * 
+ * renders :
+ *      SearchForm -> searchCompany()
+ *      CompanyCard -> one for each company in state
  */
+
 function CompanyList() {
   const [companies, setCompanies] = useState([])
-  const [searched, setSearched] = useState(false)
   const [searchTerm, setSearchTerm] = useState("");
 
+  // gets array of all companies from API
   useEffect(function getCompaniesFromApi() {
     async function getCompanies() {
-      let companies = await JoblyApi.getAllCompanies()
-      console.log("Companies ==>", companies)
-      setCompanies(companies);
+      let companiesResp = await JoblyApi.getAllCompanies();
+      setCompanies(companiesResp);
     }
-    getCompanies()
-    //console.log("FIRST LOGO URL ==>", companies[0].logoUrl)
+    getCompanies();
   }, [])
-
+  
+  // when the searchTerm state changes, get all companies that match search criteria
+  // and change Companies Array to searched companies  
   useEffect(function filterCompaniesBySearch() {
     async function searchCompanies() {
-      let companies = await JoblyApi.searchCompanies(searchTerm);
+      let companies = await JoblyApi.searchCompaniesByName(searchTerm);
       setCompanies(companies);
-      setSearched(false);
     }
-    if (searched) searchCompanies();
-  }, [searched])
+    if (searchTerm !== "") searchCompanies();
+  }, [searchTerm]);
 
-  function search(searchedTerm) {
+  // function to pass down to <SearchForm /> to retrieve search form value
+  // and set searchTerm state with said value
+  function searchCompany(searchedTerm) {
     setSearchTerm(searchedTerm);
-    setSearched(true);
   }
 
-  // write map over companies and make a CompanyCard component for each one
+  // map over all companies in companies state and create
+  // individual CompanyCards for each one 
   let companyCards = companies.map(c =>
     <CompanyCard
       key={c.handle}
@@ -47,12 +55,11 @@ function CompanyList() {
       description={c.description}
       logoUrl={TEMP_IMG_URL}
       handle={c.handle}
-    />)
-
+    />);
+  
   return (
     <div>
-      <SearchForm source="company"
-                  search={search}/>
+      <SearchForm search={searchCompany}/>
       {companyCards}
     </div>
   )

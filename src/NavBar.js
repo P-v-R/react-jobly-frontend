@@ -8,26 +8,27 @@ import "./NavBar.css";
  * will render full navBar if current user is defined(logged in)
  * will only render login/signup buttons if no currentUser
  */
+
 function NavBar(){
   
   return (
-    <nav className="NavBar navbar-md bg-light">
-      <NavLink exact to="/">
+    <nav className="navbar navbar-expand-lg navbar-light">
+      <NavLink className="nav-link" exact to="/">
         Jobly
       </NavLink>
-      <NavLink exact to="/companies">
+      <NavLink className="nav-link" exact to="/companies">
         Companies
       </NavLink>
-      <NavLink exact to="/jobs">
+      <NavLink className="nav-link" exact to="/jobs">
         Jobs
       </NavLink>
-      <NavLink exact to="/login">
+      <NavLink className="nav-link" exact to="/login">
         Login
       </NavLink>
-      <NavLink exact to="/profile">
+      <NavLink className="nav-link" exact to="/profile">
         Profile
       </NavLink>
-      <NavLink  className="" exact to="/logout?">
+      <NavLink  className="nav-link" exact to="/logout?">
         Logout
       </NavLink>
     </nav>

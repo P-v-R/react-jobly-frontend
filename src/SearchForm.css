@@ -11,3 +11,12 @@
 .search:hover{
   transform: scale(1.03);
 }
+
+.searchBtn{
+  color:lightskyblue;
+  transition: all .2s ease-in-out;
+}
+
+.searchBtn:hover{
+  transform: scale(1.40);
+}

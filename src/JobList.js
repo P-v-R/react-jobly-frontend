@@ -3,6 +3,7 @@ import JoblyApi from "./api.js";
 import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
+import {v4 as uuid} from "uuid"
 
 /**
  * JobList 
@@ -21,49 +22,49 @@ import Alert from "react-bootstrap/Alert";
 
 function JobList() {
   const [jobs, setJobs] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   // gets array of all jobs from API
   useEffect(function getJobsFromApi() {
+    console.log("search term from FX ==>", searchTerm);
+
     async function getJobs() {
       try {
-        let jobsResp = await JoblyApi.getAllJobs();
+        const jobsResp = await JoblyApi.getAllJobs(searchTerm);
+        console.log("jobs resp ==>", jobsResp)
         setJobs(jobsResp);
+        setIsLoading(false);
       } catch (err) {
         setErrors(err);
       }
     }
     getJobs();
-  }, [])
+  }, [searchTerm, isLoading])
 
-  // when the searchTerm state changes, get all Jobs that match search criteria
-  // and change Jobs Array to searched Jobs  
-  useEffect(function filterJobsBySearch() {
-    async function searchJobs() {
-      try {
-        let jobsResp = await JoblyApi.getAllJobs(searchTerm);
-        setJobs(jobsResp);
-      } catch (err) {
-        setErrors(err);
-      }
-    }
-    if (searchTerm !== "") searchJobs();
-  }, [searchTerm]);
-
-  // function to pass down to <SearchForm /> to retrieve search form value
-  // and set searchTerm state with said value
+ 
+ 
   function searchJobs(searchedTerm) {
     setSearchTerm(searchedTerm);
+    setIsLoading(true);
   }
+
+  if (isLoading) return <div></div>;
 
   return (
     <div>
-      { errors ? errors.map(err => <Alert variant="danger">{err}</Alert>) : null }
-      <SearchForm search={searchJobs} />
-      <JobCardList jobs={jobs} />
-    </div>);
-
+      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null}
+      <SearchForm
+        search={searchJobs}
+        defaultValue={searchTerm}
+      />
+      {jobs.length === 0 ?
+        <h3>No jobs found </h3> :
+        <JobCardList jobs={jobs} />
+      }
+    </div>
+  );
 }
 
 export default JobList;

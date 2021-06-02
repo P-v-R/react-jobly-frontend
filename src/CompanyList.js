@@ -3,6 +3,7 @@ import JoblyApi from "./api.js";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
+import {v4 as uuid} from "uuid"
 const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
@@ -25,9 +26,9 @@ function CompanyList() {
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("companyList errors-->", errors);
-  console.log("companyList searchTerm-->", searchTerm);
-  console.log("companyList companies-->", companies);
+  // console.log("companyList errors-->", errors);
+  // console.log("companyList searchTerm-->", searchTerm);
+  // console.log("companyList companies-->", companies);
   /**gets array of all companies from API
    * 
    * can accept param: name as searchTerm
@@ -43,9 +44,8 @@ function CompanyList() {
       }
     }
     getCompanies();
-  }, [searchTerm])
+  }, [searchTerm, isLoading])
 
-  // TODO: keep value in search bar
 
 
   // function to pass down to <SearchForm /> to retrieve search form value
@@ -64,17 +64,17 @@ function CompanyList() {
       key={c.handle}
       name={c.name}
       description={c.description}
-      logoUrl={TEMP_IMG_URL}
+      logoUrl={c.logoUrl || TEMP_IMG_URL}
       handle={c.handle}
     />);
   
     if (isLoading) return <div></div>;
-    // TODO: pass searchterm into search for for initial value
-    // TODO: ternary for line 86-88
+
+
   return (
     <div>
-      { errors ? errors.map(err => <Alert variant="danger">{err}</Alert>) : null }
-      <SearchForm search={searchCompany}/>
+      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null }
+      <SearchForm search={searchCompany} defaultValue={searchTerm}/>
       {(companyCards.length === 0) ?
         <h3>No Companies Found</h3> :
         companyCards}

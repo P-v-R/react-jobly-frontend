@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./SearchForm.css"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearchDollar } from '@fortawesome/free-solid-svg-icons'
 
 /** Generic Search Bar 
  * 
@@ -9,8 +11,8 @@ import "./SearchForm.css"
  * state:
  *    term --> what is being searched for
 */
-function SearchForm({ search }) {
-  const [term, setTerm] = useState("");
+function SearchForm({ search, defaultValue = "" }) {
+  const [term, setTerm] = useState(defaultValue);
 
   // handle/control user inputs
   function handleChange(evt) {
@@ -21,7 +23,7 @@ function SearchForm({ search }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     search(term.trim() || undefined);
-    setTerm("");
+    setTerm(defaultValue);
   }
 
   return (
@@ -32,7 +34,9 @@ function SearchForm({ search }) {
           onChange={handleChange}
           type="search" className="form-control rounded"
           placeholder="Enter search term..." />
-        <button className="btn search">Search!</button>
+        <button className="btn">
+        <FontAwesomeIcon className="searchBtn" icon={faSearchDollar} size="lg"/>
+        </button>
       </div>
     </form>
   );

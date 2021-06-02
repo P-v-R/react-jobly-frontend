@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Nav from "react-bootstrap/Nav"
 import "./NavBar.css";
 /**
  * NavBar
@@ -13,7 +12,7 @@ import "./NavBar.css";
 function NavBar(){
   
   return (
-    <Nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-lg navbar-light">
       <NavLink className="text" exact to="/">
         Jobly
       </NavLink>
@@ -26,13 +25,16 @@ function NavBar(){
       <NavLink className="text" exact to="/login">
         Login
       </NavLink>
+      <NavLink className="text" exact to="/signup">
+        Sign up
+      </NavLink>
       <NavLink className="text" exact to="/profile">
         Profile
       </NavLink>
       <NavLink  className="text" exact to="/logout?">
         Logout
       </NavLink>
-    </Nav>
+    </nav>
       
   )
 }

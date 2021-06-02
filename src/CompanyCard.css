@@ -16,8 +16,8 @@
 .card img {
   margin: auto;
   position: relative;
-  height: 4em;
-  width: 4em;
+  width: 5em; 
+  max-height: 6em;
 }
 
 .card text{

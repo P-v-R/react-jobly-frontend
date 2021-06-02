@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import JoblyApi from "./api";
 import JobCard from "./JobCard";
+import Container from "react-bootstrap/Container"
 
 /** Renders a companies details with job listing
  * 
@@ -11,7 +12,7 @@ import JobCard from "./JobCard";
  * Params: 
  *    handle as { name }
  */
-function CompanyDetail(){
+function CompanyDetail() {
   const { name } = useParams();
   const [company, setCompany] = useState({});
   const [jobs, setJobs] = useState([]);
@@ -45,9 +46,11 @@ function CompanyDetail(){
 
   return (
     <div>
-      <h2>{company.name}</h2>
-      <p>{company.description}</p>
-      { companyJobCards }
+      <Container>
+        <h2>{company.name}</h2>
+        <p>{company.description}</p>
+      </Container>
+      { companyJobCards}
     </div>
   )
 }

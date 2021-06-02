@@ -34,57 +34,36 @@ class JoblyApi {
 
   // Individual API routes
 
+   //---------------------------------COMPANIES-----------------------------------
+
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
     let res = await this.request(`companies/${handle}`);
-    console.log("res.company from api.js", res.company)
     return res.company;
   }
 
-  /** Get array of all companies */
-  static async getAllCompanies() {
-    let res = await this.request('companies');
-    return res.companies;
-  }
+  /** Get array of all companies
+   * 
+   * Can accept parameters: search by name
+   */
+  static async getAllCompanies(searchTerm) {
+    let res = await this.request('companies', { name: searchTerm });
 
-  /** Get array of companies that match search 
-   * criteria for query /?name=... */
-  static async searchCompaniesByName(searchTerm) {
-    let res = await this.request(`companies/?name=${searchTerm}`);
     return res.companies;
   }
 
 
   //---------------------------------JOBS-----------------------------------
 
+  /** Get array of all jobs 
+   * 
+   * Can accept parameters: search by title
+  */
 
-  /** Get array of all jobs */
+  static async getAllJobs(searchTerm) {
+    let res = await this.request('jobs', { title: searchTerm });
 
-  static async getAllJobs() {
-    let res = await this.request('jobs');
-    return res.jobs;
-  }
-
-
-  /** get array of jobs from one specific company */
-  static async getJobsByCompany(handle) {
-    let companiesByCompanyHandle = []
-    let res = await this.request('jobs');
-    res.jobs.map(j => {
-      if (j.companyHandle === handle) {
-        (companiesByCompanyHandle.push(j))
-      }
-    });
-    return companiesByCompanyHandle;
-  }
-
-
-
-  /** Get array of jobs matching searchTerm*/
-  
-  static async searchJobsByTitle(searchTerm) {
-    let res = await this.request(`jobs/title=${searchTerm}`);
     return res.jobs;
   }
 }

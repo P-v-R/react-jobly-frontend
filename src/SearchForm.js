@@ -20,18 +20,18 @@ function SearchForm({ search }) {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-    search(term);
+    search(term.trim() || undefined);
     setTerm("");
   }
 
   return (
     <form className="SearchForm" onSubmit={handleSubmit}>
-      <div class="input-group rounded">
+      <div className="input-group rounded">
         <input
           value={term}
           onChange={handleChange}
-          type="search" class="form-control rounded"
-          placeholder="Search" />
+          type="search" className="form-control rounded"
+          placeholder="Enter search term..." />
         <button className="btn search">Search!</button>
       </div>
     </form>

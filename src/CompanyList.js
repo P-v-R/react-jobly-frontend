@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import JoblyApi from "./api.js";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
-const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg"
+import Alert from "react-bootstrap/Alert";
+const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
  * CompanyList
  * State: companies - all company objects in one array
  *        searchTerm - the user input being searched for 
  *                      when <SearchForm /> is submitted
+ *        errors - array of all errors if they occur
  * 
  * Route --> CompanyList --> SearchForm --> CompanyCard
  * 
@@ -19,32 +21,38 @@ const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-gr
 
 function CompanyList() {
   const [companies, setCompanies] = useState([])
-  const [searchTerm, setSearchTerm] = useState("");
-
-  // gets array of all companies from API
+  const [searchTerm, setSearchTerm] = useState();
+  const [errors, setErrors] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  console.log("companyList errors-->", errors);
+  console.log("companyList searchTerm-->", searchTerm);
+  console.log("companyList companies-->", companies);
+  /**gets array of all companies from API
+   * 
+   * can accept param: name as searchTerm
+   *  */
   useEffect(function getCompaniesFromApi() {
     async function getCompanies() {
-      let companiesResp = await JoblyApi.getAllCompanies();
-      setCompanies(companiesResp);
+      try {
+        const companiesResp = await JoblyApi.getAllCompanies(searchTerm);
+        setCompanies(companiesResp);
+      } catch (err) {
+        setErrors(err);
+      }
     }
     getCompanies();
-  }, [])
-  
-  // when the searchTerm state changes, get all companies that match search criteria
-  // and change Companies Array to searched companies  
-  useEffect(function filterCompaniesBySearch() {
-    async function searchCompanies() {
-      let companies = await JoblyApi.searchCompaniesByName(searchTerm);
-      setCompanies(companies);
-    }
-    if (searchTerm !== "") searchCompanies();
-  }, [searchTerm]);
+  }, [searchTerm])
+
+  // TODO: keep value in search bar
+
 
   // function to pass down to <SearchForm /> to retrieve search form value
   // and set searchTerm state with said value
   function searchCompany(searchedTerm) {
     setSearchTerm(searchedTerm);
   }
+
+  // TODO: Add logo file and update logoUrl
 
   // map over all companies in companies state and create
   // individual CompanyCards for each one 
@@ -57,9 +65,14 @@ function CompanyList() {
       handle={c.handle}
     />);
   
+    // TODO: pass searchterm into search for for initial value
+    // TODO: ternary for line 86-88
   return (
     <div>
+      { errors ? errors.map(err => <Alert variant="danger">{err}</Alert>) : null }
       <SearchForm search={searchCompany}/>
+      {companyCards.length === 0 && 
+        <h3>No Companies Found</h3>}
       {companyCards}
     </div>
   )

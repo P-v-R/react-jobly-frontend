@@ -32,7 +32,7 @@ function SearchForm({ search }) {
           onChange={handleChange}
           type="search" class="form-control rounded"
           placeholder="Search" />
-        <button className="btn btn-primary">Search!</button>
+        <button className="btn search">Search!</button>
       </div>
     </form>
   );

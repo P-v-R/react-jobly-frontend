@@ -13,22 +13,22 @@ function NavBar(){
   
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
-      <NavLink className="nav-link" exact to="/">
+      <NavLink className="text" exact to="/">
         Jobly
       </NavLink>
-      <NavLink className="nav-link" exact to="/companies">
+      <NavLink className="text" exact to="/companies">
         Companies
       </NavLink>
-      <NavLink className="nav-link" exact to="/jobs">
+      <NavLink className="text" exact to="/jobs">
         Jobs
       </NavLink>
-      <NavLink className="nav-link" exact to="/login">
+      <NavLink className="text" exact to="/login">
         Login
       </NavLink>
-      <NavLink className="nav-link" exact to="/profile">
+      <NavLink className="text" exact to="/profile">
         Profile
       </NavLink>
-      <NavLink  className="nav-link" exact to="/logout?">
+      <NavLink  className="text" exact to="/logout?">
         Logout
       </NavLink>
     </nav>

@@ -3,7 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-
+/** Login form for jobly
+ * 
+ * App --> Routes --> LoginForm
+ */
 
 function LoginForm() {
   const [loginFormData, setLoginFormData] = useState({"username":"", "password":""})

@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 
-
-
+/** Sign up form for jobly
+ * 
+ * App --> Routes --> SignUpForm
+ */
 function SignUpForm() {
-  const [signUpFormData, setSignUpFormData] = useState({ "username": "", "password": "" })
-
+  const [signUpFormData, setSignUpFormData] = useState({ "username": "", 
+                                                         "password": "", 
+                                                         "firstName": "", 
+                                                         "lastName": "", 
+                                                         "email": "" });
 
   // handle/control user inputs
   function handleChange(evt) {
@@ -21,7 +25,7 @@ function SignUpForm() {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("This is what will be submitted =>", signUpFormData)
+    console.log("This is what will be submitted =>", signUpFormData);
   }
 
 
@@ -77,9 +81,6 @@ function SignUpForm() {
             onChange={handleChange} />
           <Form.Label>Email</Form.Label>
         </div>
-
-
-
 
         <Button
           variant="primary"

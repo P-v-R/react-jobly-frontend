@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {Redirect} from 'react-router-dom';
 
 /** Login form for jobly
  * 
  * App --> Routes --> LoginForm
  */
 
-function LoginForm({loginFromForm}) {
+function LoginForm({loginFromForm, currentUser}) {
   const [loginFormData, setLoginFormData] = useState({"username":"", "password":""})
 
 
@@ -26,7 +27,11 @@ function LoginForm({loginFromForm}) {
     console.log("This is what will be submitted =>", loginFormData)
     loginFromForm(loginFormData);
   }
+  console.log("===> currUser", currentUser)
 
+  if(currentUser !== null){
+    <Redirect to="/companies" />
+  }
 
   return (
     <Container fluid="sm">

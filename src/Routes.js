@@ -25,10 +25,16 @@ function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
         <JobList />
       </Route>
       <Route exact path="/login">
-        <LoginForm loginFromForm={loginFromForm}/>
+        <LoginForm 
+          loginFromForm={loginFromForm} 
+          currentUser={currentUser}
+        />
       </Route>
       <Route exact path="/signup">
-        <SignupForm registerFromForm={registerFromForm}/>
+        <SignupForm 
+          registerFromForm={registerFromForm} 
+          currentUser={currentUser}
+        />
       </Route>
       <Route exact path="/profile">
         <ProfileForm />

@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Redirect } from 'react-router-dom'
 
 /** Sign up form for jobly
- * 
+ * prop: registerFromForm , currentUser 
  * App --> Routes --> SignUpForm
  */
-function SignUpForm({registerFromForm}) {
+function SignUpForm({registerFromForm, currentUser}) {
   const [signUpFormData, setSignUpFormData] = useState({ "username": "", 
   "password": "", 
   "firstName": "", 
   "lastName": "", 
   "email": "" });
+
   
   // handle/control user inputs
   function handleChange(evt) {
@@ -27,7 +29,11 @@ function SignUpForm({registerFromForm}) {
     evt.preventDefault();
     registerFromForm(signUpFormData);
   }
-
+  
+  
+  if(currentUser){
+    <Redirect to="/" />
+  }
 
   return (
     <Container fluid="sm">

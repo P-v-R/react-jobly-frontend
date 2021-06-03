@@ -74,9 +74,9 @@ class JoblyApi {
    * Returns the token as a string
    */
   static async register({ username, password, firstName, lastName, email }) {
-    let res = await this.request(endpoint="/auth/register", 
-                                 data={ username, password, firstName, lastName, email },
-                                 method="post")
+    let res = await this.request("auth/register", 
+                                 { username, password, firstName, lastName, email },
+                                 "post")
     return res.token;
   }
 
@@ -86,9 +86,9 @@ class JoblyApi {
    * Return the token as a string
    */
   static async login({username, password}) {
-    let res = await this.request(endpoint="/auth/token", 
-                                 data={ username, password },
-                                 method="post")
+    let res = await this.request("auth/token", 
+                                 { username, password },
+                                 "post")
     return res.token;
   }
 }  

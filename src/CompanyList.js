@@ -3,7 +3,7 @@ import JoblyApi from "./api.js";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
-import {v4 as uuid} from "uuid"
+import {v4 as uuid} from "uuid";
 const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
@@ -41,6 +41,7 @@ function CompanyList() {
         setIsLoading(false);
       } catch (err) {
         setErrors(err);
+        setIsLoading(false);
       }
     }
     getCompanies();
@@ -54,8 +55,6 @@ function CompanyList() {
     setSearchTerm(searchedTerm);
     setIsLoading(true);
   }
-
-  // TODO: Add logo file and update logoUrl
 
   // map over all companies in companies state and create
   // individual CompanyCards for each one 

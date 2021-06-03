@@ -9,7 +9,7 @@ import SignupForm from "./SignupForm";
 import ProfileForm from "./ProfileForm";
 
 /** Routes for Jobly App */
-function Routes() {
+function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
   return (
     <Switch>
       <Route exact path="/">
@@ -25,10 +25,10 @@ function Routes() {
         <JobList />
       </Route>
       <Route exact path="/login">
-        <LoginForm />
+        <LoginForm loginFromForm={loginFromForm}/>
       </Route>
       <Route exact path="/signup">
-        <SignupForm />
+        <SignupForm registerFromForm={registerFromForm}/>
       </Route>
       <Route exact path="/profile">
         <ProfileForm />

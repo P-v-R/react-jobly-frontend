@@ -7,13 +7,13 @@ import Form from 'react-bootstrap/Form';
  * 
  * App --> Routes --> SignUpForm
  */
-function SignUpForm() {
+function SignUpForm({registerFromForm}) {
   const [signUpFormData, setSignUpFormData] = useState({ "username": "", 
-                                                         "password": "", 
-                                                         "firstName": "", 
-                                                         "lastName": "", 
-                                                         "email": "" });
-
+  "password": "", 
+  "firstName": "", 
+  "lastName": "", 
+  "email": "" });
+  
   // handle/control user inputs
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -25,7 +25,7 @@ function SignUpForm() {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("This is what will be submitted =>", signUpFormData);
+    registerFromForm(signUpFormData);
   }
 
 

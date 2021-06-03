@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
  * App --> Routes --> LoginForm
  */
 
-function LoginForm() {
+function LoginForm({loginFromForm}) {
   const [loginFormData, setLoginFormData] = useState({"username":"", "password":""})
 
 
@@ -24,6 +24,7 @@ function LoginForm() {
   function handleSubmit(evt) {
     evt.preventDefault();
     console.log("This is what will be submitted =>", loginFormData)
+    loginFromForm(loginFormData);
   }
 
 

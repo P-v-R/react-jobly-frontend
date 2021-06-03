@@ -38,7 +38,6 @@ function CompanyDetail() {
     getCompany();
   }, [name]);
 
-  // TODO keys for error messages
   return (
     <div>
       { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null }

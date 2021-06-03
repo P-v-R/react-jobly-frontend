@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import JoblyApi from "./api.js";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
+import UserContext from "./userContext";
 const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
@@ -25,6 +27,7 @@ function CompanyList() {
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { currentUser } = useContext(UserContext);
 
   // console.log("companyList errors-->", errors);
   // console.log("companyList searchTerm-->", searchTerm);
@@ -44,8 +47,8 @@ function CompanyList() {
         setIsLoading(false);
       }
     }
-    getCompanies();
-  }, [searchTerm, isLoading])
+    if (currentUser) getCompanies();
+  }, [searchTerm, isLoading, currentUser])
 
 
 
@@ -66,14 +69,18 @@ function CompanyList() {
       logoUrl={c.logoUrl || TEMP_IMG_URL}
       handle={c.handle}
     />);
-  
-    if (isLoading) return <div></div>;
 
+  // if user is not logged in, redirects to homepage
+  if (currentUser === null) {
+    return (<Redirect to="/" />)
+  }
+
+  if (isLoading) return <div></div>;
 
   return (
     <div>
-      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null }
-      <SearchForm search={searchCompany} defaultValue={searchTerm}/>
+      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null}
+      <SearchForm search={searchCompany} defaultValue={searchTerm} />
       {(companyCards.length === 0) ?
         <h3>No Companies Found</h3> :
         companyCards}

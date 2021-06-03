@@ -7,40 +7,43 @@ import JobList from "./JobList";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import ProfileForm from "./ProfileForm";
+import UserContext from "./userContext";
 
 /** Routes for Jobly App */
 function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
   return (
-    <Switch>
-      <Route exact path="/">
-        <Homepage currentUser={currentUser}/>
-      </Route>
-      <Route exact path="/companies">
-        <CompanyList />
-      </Route>
-      <Route exact path="/companies/:name">
-        <CompanyDetail />
-      </Route>
-      <Route exact path="/jobs">
-        <JobList />
-      </Route>
-      <Route exact path="/login">
-        <LoginForm 
-          loginFromForm={loginFromForm} 
-          currentUser={currentUser}
-        />
-      </Route>
-      <Route exact path="/signup">
-        <SignupForm 
-          registerFromForm={registerFromForm} 
-          currentUser={currentUser}
-        />
-      </Route>
-      <Route exact path="/profile">
-        <ProfileForm />
-      </Route>
-      <Redirect to="/" />
-    </Switch>
+    <UserContext.Provider value={{ currentUser }}>
+      <Switch>
+        <Route exact path="/">
+          <Homepage currentUser={currentUser} />
+        </Route>
+        <Route exact path="/companies">
+          <CompanyList />
+        </Route>
+        <Route exact path="/companies/:name">
+          <CompanyDetail />
+        </Route>
+        <Route exact path="/jobs">
+          <JobList />
+        </Route>
+        <Route exact path="/login">
+          <LoginForm
+            loginFromForm={loginFromForm}
+            currentUser={currentUser}
+          />
+        </Route>
+        <Route exact path="/signup">
+          <SignupForm
+            registerFromForm={registerFromForm}
+            currentUser={currentUser}
+          />
+        </Route>
+        <Route exact path="/profile">
+          <ProfileForm />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    </UserContext.Provider>
   )
 }
 

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { useParams, Redirect } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
 import {v4 as uuid } from "uuid";
 
 import JoblyApi from "./api";
 import JobCardList from "./JobCardList";
+import UserContext from "./userContext";
 
 /** Renders a companies details with job listing
  * 
@@ -22,7 +23,10 @@ function CompanyDetail() {
   const [company, setCompany] = useState({});
   const [jobs, setJobs] = useState([]);
   const [errors, setErrors] = useState([]);
-
+  const { currentUser } = useContext(UserContext);
+  
+  console.log("currentUser in companydetail from context--->", currentUser);
+  
   console.log("companyDetail--->", company.jobs);
   // get information on individual company from api
   useEffect(function getCompanyFromApi() {
@@ -35,8 +39,12 @@ function CompanyDetail() {
         setErrors(err);
       }
     }
-    getCompany();
-  }, [name]);
+    if (currentUser) getCompany();
+  }, [name, currentUser]);
+  
+  if (currentUser === null) {
+    return (<Redirect to="/" />)
+  }
 
   return (
     <div>

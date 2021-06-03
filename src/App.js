@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuid } from "uuid"
 import Routes from "./Routes";
 import NavBar from "./NavBar";
 import JoblyApi from "./api.js";
 import Alert from "react-bootstrap/Alert";
-import { useJwt } from "react-jwt";
 import './App.css';
 
 /**
@@ -15,8 +14,8 @@ import './App.css';
  * state:
  *      currentUser 
  *      token
- *      onLogin
- *      onRegister
+ *      isLogin
+ *      isRegister
  *      errors
  *      loginFormData
  *      registerFormData
@@ -27,8 +26,8 @@ import './App.css';
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState("");
-  const [onLogin, setOnLogin] = useState(false); // should think of better name 
-  const [onRegister, setOnRegister] = useState(false); // should think of better name 
+  const [isLogin, setIsLogin] = useState(false); // should think of better name 
+  const [isRegister, setIsRegister] = useState(false); // should think of better name 
   const [errors, setErrors] = useState([]);
   const [loginFormData, setLoginFormData] = useState({
     username: "",
@@ -54,18 +53,15 @@ function App() {
         const username = loginFormData.username
         const userFromApi = await JoblyApi.getUser({ username, token })
         setCurrentUser(userFromApi)
-        setOnLogin(false);
+        setIsLogin(false);
+        setErrors([]);
       } catch (err) {
         setErrors(err);
-        setOnLogin(false);
+        setIsLogin(false);
       }
     }
-    if (onLogin) login();
-  }, [onLogin]);
-
-
-  // let payload = useJwt(token);
-
+    if (isLogin) login();
+  }, [isLogin, loginFormData]);
 
   // handle registration form State received from registerFromForm() and make API call
   // catch any errors that API gives back
@@ -77,27 +73,26 @@ function App() {
         const username = registerFormData.username
         const userFromApi = await JoblyApi.getUser({ username, token })
         setCurrentUser(userFromApi)
-        setOnRegister(false);
+        setIsRegister(false);
+        setErrors([]);
       } catch (err) {
         setErrors(err);
-        setOnRegister(false);
+        setIsRegister(false);
       }
     }
-    if (onRegister) signup();
-  }, [onRegister]);
-  // TODO double check state name 
-
+    if (isRegister) signup();
+  }, [isRegister, registerFormData]);
 
   // set state from log inform to trigger useEffect 
   function loginFromForm({ username, password }) {
-    setOnLogin(true);
+    setIsLogin(true);
     setLoginFormData({ username, password });
   }
 
 
   // set state from register form to trigger useEffect 
   function registerFromForm({ username, password, firstName, lastName, email }) {
-    setOnRegister(true);
+    setIsRegister(true);
     setRegisterFormData({ username, password, firstName, lastName, email })
     setErrors([]);
   }
@@ -107,16 +102,17 @@ function App() {
     console.log("logout ran!")
     setCurrentUser(null);
     setToken("");
-    setOnLogin(false);
+    setIsLogin(false);
   }
   return (
     <div className="App">
       { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null}
       <BrowserRouter>
-        <NavBar token={token}
+        <NavBar
           logout={logout}
           currentUser={currentUser} />
-        <Routes token={token}
+        <Routes 
+          token={token}
           currentUser={currentUser}
           loginFromForm={loginFromForm}
           registerFromForm={registerFromForm} />

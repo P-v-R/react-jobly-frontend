@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Redirect } from "react-router-dom";
 import JoblyApi from "./api.js";
 import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
-import {v4 as uuid} from "uuid"
+import {v4 as uuid} from "uuid";
+import UserContext from "./userContext";
 
 /**
  * JobList 
@@ -25,6 +27,7 @@ function JobList() {
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const { currentUser } = useContext(UserContext);
 
   // gets array of all jobs from API
   useEffect(function getJobsFromApi() {
@@ -38,10 +41,11 @@ function JobList() {
         setIsLoading(false);
       } catch (err) {
         setErrors(err);
+        setIsLoading(false);
       }
     }
-    getJobs();
-  }, [searchTerm, isLoading])
+    if (currentUser) getJobs();
+  }, [searchTerm, isLoading, currentUser])
 
  
  
@@ -49,7 +53,12 @@ function JobList() {
     setSearchTerm(searchedTerm);
     setIsLoading(true);
   }
-
+  
+  // if user is not logged in, redirects to homepage
+  if (currentUser === null) {
+    return (<Redirect to="/" />)
+  }
+  
   if (isLoading) return <div></div>;
 
   return (

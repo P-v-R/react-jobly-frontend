@@ -14,15 +14,15 @@ import "./NavBar.css";
  * will only render login/signup buttons if no currentUser
  */
 
-function NavBar({ token, currentUser, logout }) {
+function NavBar({ currentUser, logout }) {
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light navbar-brand">
+    <nav className="navbar navbar-expand-lg navbar-light">
       <NavLink className="text" exact to="/">
         Jobly
       </NavLink>
       {
-        (token !== "") ?
+        (currentUser !== null) ?
         <div className="w-75 p-1">
         <NavLink className="text" exact to="/companies">
           Companies
@@ -34,7 +34,7 @@ function NavBar({ token, currentUser, logout }) {
           Profile
         </NavLink>
         <NavLink className="text" exact to="/logout">
-          <span onClick={logout}>Logout</span>
+          <span onClick={logout}>Logout { currentUser.username }</span>
         </NavLink>
         </div>
         :

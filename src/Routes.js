@@ -10,7 +10,8 @@ import ProfileForm from "./ProfileForm";
 import UserContext from "./userContext";
 
 /** Routes for Jobly App */
-function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
+/** this is where our userObject is provided to all child components  */
+function Routes({ currentUser, logInUser, registerFromForm }) {
   return (
     <UserContext.Provider value={{ currentUser }}>
       <Switch>
@@ -28,7 +29,7 @@ function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
         </Route>
         <Route exact path="/login">
           <LoginForm
-            loginFromForm={loginFromForm}
+            logInUser={logInUser}
             currentUser={currentUser}
           />
         </Route>

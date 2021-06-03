@@ -21,9 +21,9 @@ function JobCard({ compHandle, title, salary, equity }) {
         <Card.Body>
           <Card.Title>Salary: ${formattedSalary} </Card.Title>
           <Card.Text>
-            {compHandle && `Company - ${compHandle}`}
+            {compHandle && `Company : ${compHandle}`}
             <br/>
-            Offering {formattedEquity}% in equity.
+            Offering <b>{formattedEquity}%</b> in equity.
           </Card.Text>
           <Button variant="primary">Apply</Button>
         </Card.Body>

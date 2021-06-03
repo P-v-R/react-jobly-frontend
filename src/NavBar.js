@@ -23,7 +23,7 @@ function NavBar({ currentUser, logout }) {
       </NavLink>
       {
         (currentUser !== null) ?
-        <div className="w-75 p-1">
+        <div className="w-75 p-3 mr-3">
         <NavLink className="text" exact to="/companies">
           Companies
         </NavLink>
@@ -38,7 +38,7 @@ function NavBar({ currentUser, logout }) {
         </NavLink>
         </div>
         :
-        <div className="w-25 p-3">
+        <div className="w-50 p-3 ">
         <NavLink className="text" exact to="/login">
           Login
         </NavLink>

@@ -25,9 +25,7 @@ function CompanyDetail() {
   const [errors, setErrors] = useState([]);
   const { currentUser } = useContext(UserContext);
   
-  console.log("currentUser in companydetail from context--->", currentUser);
   
-  console.log("companyDetail--->", company.jobs);
   // get information on individual company from api
   useEffect(function getCompanyFromApi() {
     async function getCompany() {

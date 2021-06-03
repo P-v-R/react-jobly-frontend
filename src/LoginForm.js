@@ -10,11 +10,10 @@ import { Redirect } from 'react-router-dom';
  * 
  * state : loginFormData 
  * 
- *  
  * App --> Routes --> LoginForm
  */
 
-function LoginForm({ loginFromForm, currentUser }) {
+function LoginForm({ logInUser, currentUser }) {
   const [loginFormData, setLoginFormData] = useState({ "username": "", "password": "" })
 
 
@@ -27,14 +26,13 @@ function LoginForm({ loginFromForm, currentUser }) {
     }));
   }
   // handle user submit and send data to parent component
-  function handleSubmit(evt) {
+  async function handleSubmit(evt) {
     evt.preventDefault();
-    loginFromForm(loginFormData);
+    await logInUser(loginFormData);
   }
   // redirect when theres a user logged in
-  console.log("===> currUser", currentUser)
   if (currentUser !== null) {
-  return <Redirect to="/companies" />
+  return <Redirect to="/" />
   }
 
   return (

@@ -62,7 +62,6 @@ class JoblyApi {
   */
 
   static async getAllJobs(searchTerm) {
-    console.log("SEARCH TERM ==>", searchTerm)
     let res = await this.request('jobs', { title: searchTerm });
     return res.jobs;
   }
@@ -91,8 +90,8 @@ class JoblyApi {
                                  "post")
     return res.token;
   }
-  static async getUser({username, token}){
-    JoblyApi.token = token;
+  static async getUser({username}){
+    
     let res = await this.request(`users/${username}`)
     console.log("this is res from api ==>", res)
     return res.user
@@ -101,8 +100,8 @@ class JoblyApi {
 
 
 // for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-  "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-  "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
+// JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
+//   "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
+//   "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;

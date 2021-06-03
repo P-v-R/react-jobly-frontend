@@ -1,6 +1,6 @@
 import React from "react";
 function ProfileForm(){
-  return ("Profile Form")
+  return (<div>"UNDER CONSTRUCTION"</div>)
 }
 
 export default ProfileForm;

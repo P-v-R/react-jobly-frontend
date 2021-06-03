@@ -6,6 +6,7 @@ import Routes from "./Routes";
 import NavBar from "./NavBar";
 import JoblyApi from "./api.js";
 import Alert from "react-bootstrap/Alert";
+import { decode } from "jsonwebtoken";
 import './App.css';
 
 /**
@@ -13,26 +14,21 @@ import './App.css';
  * App()
  * state:
  *      currentUser 
- *      token
  *      isLogin
  *      isRegister
  *      errors
  *      loginFormData
  *      registerFormData
  *      
- * 
  * handles login signup functionality 
  */
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [token, setToken] = useState("");
-  const [isLogin, setIsLogin] = useState(false); // should think of better name 
-  const [isRegister, setIsRegister] = useState(false); // should think of better name 
+  const [isRegister, setIsRegister] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [loginFormData, setLoginFormData] = useState({
-    username: "",
-    password: ""
-  });
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [isLoading, setIsLoading] = useState(true)
+
   const [registerFormData, setRegisterFormData] = useState({
     username: "",
     password: "",
@@ -43,33 +39,45 @@ function App() {
 
 
   // handle login form State received from loginFromForm() and make API call
-  // catch any errors that API gives back
-  useEffect(function callLoginFromApi() {
-    async function login() {
-      console.log("app.js login ran")
-      try {
-        const token = await JoblyApi.login(loginFormData);
-        setToken(token);
-        const username = loginFormData.username
-        const userFromApi = await JoblyApi.getUser({ username, token })
-        setCurrentUser(userFromApi)
-        setIsLogin(false);
-        setErrors([]);
-      } catch (err) {
-        setErrors(err);
-        setIsLogin(false);
+  // catch any errors that API gives back, if successful clear errors, set isLogin to false
+  // and assign currentUser
+
+  // TODO add state for token
+  // TODO implement login/register logic 
+
+  useEffect(function getCurrentUserFromApi(){
+    async function getCurrentUser(){
+      if(token){
+        JoblyApi.token = token;
+        const { username } = decode(token)
+        const userFromApi = await JoblyApi.getUser({ username })
+        setCurrentUser(userFromApi);
       }
+      setIsLoading(false)
     }
-    if (isLogin) login();
-  }, [isLogin, loginFormData]);
+    getCurrentUser();
+  }, [token])
+
+  async function logInUser(loginFormData) {
+    console.log("app.js login ran");
+    try {
+      const token = await JoblyApi.login(loginFormData);
+      // local storage
+      localStorage.setItem("token", token)
+      setToken(token)
+      setErrors([]);
+    } catch (err) {
+      setErrors(err);
+    }
+  }
 
   // handle registration form State received from registerFromForm() and make API call
-  // catch any errors that API gives back
+  // catch any errors that API gives back if successful clear errors, set isLogin to false
+  // and assign currentUser
   useEffect(function callSignupFromApi() {
     async function signup() {
       try {
         const token = await JoblyApi.register(registerFormData);
-        setToken(token);
         const username = registerFormData.username
         const userFromApi = await JoblyApi.getUser({ username, token })
         setCurrentUser(userFromApi)
@@ -83,12 +91,7 @@ function App() {
     if (isRegister) signup();
   }, [isRegister, registerFormData]);
 
-  // set state from log inform to trigger useEffect 
-  function loginFromForm({ username, password }) {
-    setIsLogin(true);
-    setLoginFormData({ username, password });
-  }
-
+  // TODO need an effect that 
 
   // set state from register form to trigger useEffect 
   function registerFromForm({ username, password, firstName, lastName, email }) {
@@ -99,22 +102,29 @@ function App() {
 
   // logout current user, set current user and token state to empty string
   function logout() {
-    console.log("logout ran!")
+    console.log("logout ran!");
     setCurrentUser(null);
-    setToken("");
-    setIsLogin(false);
+    setToken(null);
+    localStorage.removeItem("token");
   }
+
+  if(isLoading){
+    return (<h1>Loading</h1>)
+  }
+
   return (
     <div className="App">
-      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null}
+      { errors ? errors.map(err =>
+        <Alert key={uuid()} variant="danger">{err}</Alert>)
+        : null
+      }
       <BrowserRouter>
         <NavBar
           logout={logout}
           currentUser={currentUser} />
-        <Routes 
-          token={token}
+        <Routes
           currentUser={currentUser}
-          loginFromForm={loginFromForm}
+          logInUser={logInUser}
           registerFromForm={registerFromForm} />
       </BrowserRouter>
     </div>

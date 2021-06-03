@@ -14,6 +14,10 @@ import UserContext from "./userContext";
  *    searchTerm - the user input searched for 
  *                 when <SearchForm /> is submitted
  *    errors - array of all errors if they occur
+ *    isLoading (boolean)
+ *    
+ * Context:
+ *      currentUser {object of info on current user}
  * 
  * route --> JobList --> SearchForm --> CompanyCard
  * 
@@ -31,12 +35,10 @@ function JobList() {
 
   // gets array of all jobs from API
   useEffect(function getJobsFromApi() {
-    console.log("search term from FX ==>", searchTerm);
 
     async function getJobs() {
       try {
         const jobsResp = await JoblyApi.getAllJobs(searchTerm);
-        console.log("jobs resp ==>", jobsResp)
         setJobs(jobsResp);
         setIsLoading(false);
       } catch (err) {
@@ -47,7 +49,6 @@ function JobList() {
     if (currentUser) getJobs();
   }, [searchTerm, isLoading, currentUser])
 
- 
  
   function searchJobs(searchedTerm) {
     setSearchTerm(searchedTerm);

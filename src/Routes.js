@@ -13,7 +13,7 @@ function Routes({ token, currentUser, loginFromForm, registerFromForm }) {
   return (
     <Switch>
       <Route exact path="/">
-        <Homepage />
+        <Homepage currentUser={currentUser}/>
       </Route>
       <Route exact path="/companies">
         <CompanyList />

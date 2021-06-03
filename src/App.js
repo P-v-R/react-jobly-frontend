@@ -24,26 +24,13 @@ import './App.css';
  */
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isRegister, setIsRegister] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [token, setToken] = useState(localStorage.getItem("token"))
-  const [isLoading, setIsLoading] = useState(true)
-
-  const [registerFormData, setRegisterFormData] = useState({
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    email: ""
-  });
-
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [isLoading, setIsLoading] = useState(true);
 
   // handle login form State received from loginFromForm() and make API call
   // catch any errors that API gives back, if successful clear errors, set isLogin to false
   // and assign currentUser
-
-  // TODO add state for token
-  // TODO implement login/register logic 
 
   useEffect(function getCurrentUserFromApi(){
     async function getCurrentUser(){
@@ -71,33 +58,26 @@ function App() {
     }
   }
 
-  // handle registration form State received from registerFromForm() and make API call
-  // catch any errors that API gives back if successful clear errors, set isLogin to false
-  // and assign currentUser
-  useEffect(function callSignupFromApi() {
-    async function signup() {
-      try {
-        const token = await JoblyApi.register(registerFormData);
-        const username = registerFormData.username
-        const userFromApi = await JoblyApi.getUser({ username, token })
-        setCurrentUser(userFromApi)
-        setIsRegister(false);
-        setErrors([]);
-      } catch (err) {
-        setErrors(err);
-        setIsRegister(false);
-      }
+  async function registerUser(registerFormData) {
+    try {
+      const token = await JoblyApi.register(registerFormData);
+      // local storage
+      localStorage.setItem("token", token)
+      setToken(token)
+      setErrors([]);
+    } catch (err) {
+      setErrors(err);
     }
-    if (isRegister) signup();
-  }, [isRegister, registerFormData]);
+  }
 
-  // TODO need an effect that 
-
-  // set state from register form to trigger useEffect 
-  function registerFromForm({ username, password, firstName, lastName, email }) {
-    setIsRegister(true);
-    setRegisterFormData({ username, password, firstName, lastName, email })
-    setErrors([]);
+  async function editUser({ username, firstName, lastName, email, password}) {
+    try {
+      await JoblyApi.login({username, password});
+      await JoblyApi.editUser({username, firstName, lastName, email, password});
+      setErrors([]);
+    } catch (err) {
+      setErrors(err);
+    }
   }
 
   // logout current user, set current user and token state to empty string
@@ -125,7 +105,8 @@ function App() {
         <Routes
           currentUser={currentUser}
           logInUser={logInUser}
-          registerFromForm={registerFromForm} />
+          editUser={editUser}
+          registerUser={registerUser} />
       </BrowserRouter>
     </div>
   );

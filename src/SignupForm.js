@@ -13,7 +13,7 @@ import { Redirect } from 'react-router-dom'
  * 
  * App --> Routes --> SignUpForm
  */
-function SignUpForm({ registerFromForm, currentUser }) {
+function SignUpForm({ registerUser, currentUser }) {
   const [signUpFormData, setSignUpFormData] = useState({
     "username": "",
     "password": "",
@@ -34,7 +34,7 @@ function SignUpForm({ registerFromForm, currentUser }) {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-    registerFromForm(signUpFormData);
+    registerUser(signUpFormData);
   }
 
   // redirect if theres a current user 

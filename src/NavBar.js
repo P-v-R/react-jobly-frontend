@@ -1,9 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
+
 /**
  * NavBar
- *  Props: currentUser, loginFromForm, registerFromForm, logout
+ *  Props: 
+ *    currentUser
+ *    loginFromForm
+ *    registerFromForm
+ *    logout
  * 
  * will render full navBar if current user is defined(logged in)
  * will only render login/signup buttons if no currentUser
@@ -12,13 +17,13 @@ import "./NavBar.css";
 function NavBar({ token, currentUser, logout }) {
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light">
+    <nav className="navbar navbar-expand-lg navbar-light navbar-brand">
       <NavLink className="text" exact to="/">
         Jobly
       </NavLink>
       {
         (token !== "") ?
-        <div>
+        <div className="w-75 p-1">
         <NavLink className="text" exact to="/companies">
           Companies
         </NavLink>
@@ -33,7 +38,7 @@ function NavBar({ token, currentUser, logout }) {
         </NavLink>
         </div>
         :
-        <div>
+        <div className="w-25 p-3">
         <NavLink className="text" exact to="/login">
           Login
         </NavLink>

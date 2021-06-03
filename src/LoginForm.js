@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 /** Login form for jobly
  * 
+ * props : loginFromForm(), currentUser
+ * 
+ * state : loginFormData 
+ * 
+ *  
  * App --> Routes --> LoginForm
  */
 
-function LoginForm({loginFromForm, currentUser}) {
-  const [loginFormData, setLoginFormData] = useState({"username":"", "password":""})
+function LoginForm({ loginFromForm, currentUser }) {
+  const [loginFormData, setLoginFormData] = useState({ "username": "", "password": "" })
 
 
   // handle/control user inputs
@@ -24,13 +29,12 @@ function LoginForm({loginFromForm, currentUser}) {
   // handle user submit and send data to parent component
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("This is what will be submitted =>", loginFormData)
     loginFromForm(loginFormData);
   }
+  // redirect when theres a user logged in
   console.log("===> currUser", currentUser)
-
-  if(currentUser !== null){
-    <Redirect to="/companies" />
+  if (currentUser !== null) {
+  return <Redirect to="/companies" />
   }
 
   return (
@@ -54,9 +58,9 @@ function LoginForm({loginFromForm, currentUser}) {
             onChange={handleChange} />
           <Form.Label>Password</Form.Label>
         </div>
-        <Button 
-        variant="primary" 
-        onClick={handleSubmit}>
+        <Button
+          variant="primary"
+          onClick={handleSubmit}>
           Submit
         </Button>
       </Form>

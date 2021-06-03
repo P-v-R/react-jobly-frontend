@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Redirect} from "react-router-dom";
+import { BrowserRouter, Redirect } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuid } from "uuid"
 import Routes from "./Routes";
@@ -13,16 +13,22 @@ import './App.css';
  * Need a docstring overhaul on this 
  * App()
  * state:
+ *      currentUser 
+ *      token
+ *      onLogin
+ *      onRegister
+ *      errors
+ *      loginFormData
+ *      registerFormData
+ *      
  * 
  * handles login signup functionality 
- * 
- * 
  */
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState("");
-  const [onLogin, setOnLogin] = useState(false);
-  const [onRegister, setOnRegister] = useState(false);
+  const [onLogin, setOnLogin] = useState(false); // should think of better name 
+  const [onRegister, setOnRegister] = useState(false); // should think of better name 
   const [errors, setErrors] = useState([]);
   const [loginFormData, setLoginFormData] = useState({
     username: "",
@@ -46,7 +52,7 @@ function App() {
         const token = await JoblyApi.login(loginFormData);
         setToken(token);
         const username = loginFormData.username
-        const userFromApi = await JoblyApi.getUser({username, token})
+        const userFromApi = await JoblyApi.getUser({ username, token })
         setCurrentUser(userFromApi)
         setOnLogin(false);
       } catch (err) {
@@ -69,7 +75,7 @@ function App() {
         const token = await JoblyApi.register(registerFormData);
         setToken(token);
         const username = registerFormData.username
-        const userFromApi = await JoblyApi.getUser({username, token})
+        const userFromApi = await JoblyApi.getUser({ username, token })
         setCurrentUser(userFromApi)
         setOnRegister(false);
       } catch (err) {
@@ -99,7 +105,7 @@ function App() {
   // logout current user, set current user and token state to empty string
   function logout() {
     console.log("logout ran!")
-    setCurrentUser({ "username": "" });
+    setCurrentUser(null);
     setToken("");
     setOnLogin(false);
   }

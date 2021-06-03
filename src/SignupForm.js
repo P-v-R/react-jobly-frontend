@@ -5,17 +5,24 @@ import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom'
 
 /** Sign up form for jobly
- * prop: registerFromForm , currentUser 
+ * 
+ * prop: registerFromForm() , currentUser 
+ * 
+ * state: signUpFormData
+ * 
+ * 
  * App --> Routes --> SignUpForm
  */
-function SignUpForm({registerFromForm, currentUser}) {
-  const [signUpFormData, setSignUpFormData] = useState({ "username": "", 
-  "password": "", 
-  "firstName": "", 
-  "lastName": "", 
-  "email": "" });
+function SignUpForm({ registerFromForm, currentUser }) {
+  const [signUpFormData, setSignUpFormData] = useState({
+    "username": "",
+    "password": "",
+    "firstName": "",
+    "lastName": "",
+    "email": ""
+  });
 
-  
+
   // handle/control user inputs
   function handleChange(evt) {
     const { name, value } = evt.target;
@@ -29,11 +36,12 @@ function SignUpForm({registerFromForm, currentUser}) {
     evt.preventDefault();
     registerFromForm(signUpFormData);
   }
-  
-  
-  if(currentUser){
-    <Redirect to="/" />
+
+  // redirect if theres a current user 
+  if (currentUser !== null) {
+    return <Redirect to="/companies" />
   }
+
 
   return (
     <Container fluid="sm">

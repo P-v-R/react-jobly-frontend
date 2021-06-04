@@ -5,7 +5,6 @@ import Button from "react-bootstrap/Button";
 
 function HomePage({ currentUser }) {
 
-
   return (
     <div>
       { (currentUser) ?

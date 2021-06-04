@@ -49,7 +49,7 @@ function JobList() {
     if (currentUser) getJobs();
   }, [searchTerm, isLoading, currentUser])
 
- 
+  // handle search form
   function searchJobs(searchedTerm) {
     setSearchTerm(searchedTerm);
     setIsLoading(true);
@@ -59,7 +59,7 @@ function JobList() {
   if (currentUser === null) {
     return (<Redirect to="/" />)
   }
-  
+
   if (isLoading) return <div></div>;
 
   return (

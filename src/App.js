@@ -28,10 +28,8 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
 
-  // handle login form State received from loginFromForm() and make API call
-  // catch any errors that API gives back, if successful clear errors, set isLogin to false
-  // and assign currentUser
-
+  // when token changes, token is decoded to get user information.
+  // current user is set
   useEffect(function getCurrentUserFromApi(){
     async function getCurrentUser(){
       if(token){
@@ -45,6 +43,7 @@ function App() {
     getCurrentUser();
   }, [token])
 
+  // handle log in form submission, sets token into local storage
   async function logInUser(loginFormData) {
     console.log("app.js login ran");
     try {
@@ -58,6 +57,7 @@ function App() {
     }
   }
 
+  // handle registration form submission, sets token into local storage
   async function registerUser(registerFormData) {
     try {
       const token = await JoblyApi.register(registerFormData);
@@ -70,6 +70,8 @@ function App() {
     }
   }
 
+  // handle edit user profile form. Only current user with correct password can 
+  // edit profile
   async function editUser({ username, firstName, lastName, email, password}) {
     try {
       await JoblyApi.login({username, password});
@@ -88,6 +90,7 @@ function App() {
     localStorage.removeItem("token");
   }
 
+  // during initial render, wait for api calls to finish
   if(isLoading){
     return (<h1>Loading</h1>)
   }

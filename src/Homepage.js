@@ -20,19 +20,14 @@ function HomePage({ currentUser }) {
             <h3>May you start printing dollars.</h3>
           </Container>
           <Container className="d-flex justify-content-center">
-            <Button
-              className="homeButton"
-              href="/companies"
-              variant="outline-primary">
-              Companies</Button>
-            <NavLink className="btn btn-primary" exact to="/jobs">
+           
+            <NavLink className="btn homeButton " exact to="/jobs">
               Jobs
             </NavLink>
-            <Button
-              className="homeButton"
-              href="/jobs"
-              variant="outline-primary">
-              Jobs</Button>
+            <NavLink className="btn homeButton" exact to="/companies">
+              Companies
+            </NavLink>
+
           </Container>
         </div>
         :
@@ -44,16 +39,14 @@ function HomePage({ currentUser }) {
             <h3>Your one stop job destination</h3>
           </Container >
           <Container className="d-flex justify-content-center">
-            <Button
-              className="homeButton"
-              href="/login"
-              variant="outline-primary">
-              login</Button>
-            <Button
-              className="homeButton"
-              href="/signup"
-              variant="outline-primary">
-              sign up</Button>
+ 
+              <NavLink className="btn homeButton" exact to="/login">
+              Login
+            </NavLink>
+            <NavLink className="btn homeButton" exact to="/signup">
+              Sign Up
+            </NavLink>
+     
           </Container>
         </div>
       }

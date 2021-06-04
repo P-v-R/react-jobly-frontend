@@ -30,9 +30,9 @@ function App() {
 
   // when token changes, token is decoded to get user information.
   // current user is set
-  useEffect(function getCurrentUserFromApi(){
-    async function getCurrentUser(){
-      if(token){
+  useEffect(function getCurrentUserFromApi() {
+    async function getCurrentUser() {
+      if (token) {
         JoblyApi.token = token;
         const { username } = decode(token)
         const userFromApi = await JoblyApi.getUser({ username })
@@ -72,10 +72,10 @@ function App() {
 
   // handle edit user profile form. Only current user with correct password can 
   // edit profile
-  async function editUser({ username, firstName, lastName, email, password}) {
+  async function editUser({ username, firstName, lastName, email, password }) {
     try {
-      await JoblyApi.login({username, password});
-      await JoblyApi.editUser({username, firstName, lastName, email, password});
+      await JoblyApi.login({ username, password });
+      await JoblyApi.editUser({ username, firstName, lastName, email, password });
       setErrors([]);
     } catch (err) {
       setErrors(err);

@@ -6,6 +6,9 @@ import SearchForm from "./SearchForm";
 import Alert from "react-bootstrap/Alert";
 import { v4 as uuid } from "uuid";
 import UserContext from "./userContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass } from "@fortawesome/free-solid-svg-icons";
+import "./CompanyList.css"
 const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
@@ -75,7 +78,12 @@ function CompanyList() {
     return (<Redirect to="/" />)
   }
 
-  if (isLoading) return <div></div>;
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center">
+        <FontAwesomeIcon className="spinnerIcon" icon={faCompass} size="10x"/>
+      </div>)
+  }
 
   return (
     <div>

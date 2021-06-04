@@ -3,6 +3,7 @@
 }
 
 .JobCard {
+  width: 70%;
   border-radius: 4px;
   background: #fff;
   box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
@@ -14,4 +15,9 @@
 .JobCard:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.header {
+  background-color: #a5d1eb;
+  width: 108%;
 }

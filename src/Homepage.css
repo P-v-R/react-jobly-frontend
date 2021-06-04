@@ -1,0 +1,11 @@
+.homepage {
+    padding-top: 20%;
+}
+
+.homeButton {
+    margin: 2%;
+    width: 8em;
+    color: #63b6e6;
+    font-weight: bold;
+    border-color: #63b6e6;
+}

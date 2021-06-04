@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
+
 import Homepage from "./Homepage";
 import CompanyList from "./CompanyList";
 import CompanyDetail from "./CompanyDetail";
@@ -9,7 +10,10 @@ import SignupForm from "./SignupForm";
 import ProfileForm from "./ProfileForm";
 import UserContext from "./userContext";
 
-/** Routes for Jobly App */
+/** Routes for Jobly App
+ * 
+ * props: { currentUser, logInUser, registerUser, editUser }
+ */
 /** this is where our userObject is provided to all child components  */
 function Routes({ currentUser, logInUser, registerUser, editUser }) {
   return (

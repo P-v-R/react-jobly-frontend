@@ -4,7 +4,6 @@
   
 }
 
-
 .text{
   color: rgb(255, 255, 255);
   font-weight: bolder;
@@ -18,3 +17,5 @@
   transform: scale(1.5);
   text-decoration: underline;
 }
+
+/* TODO: Add responsive design for nav bar, hamburger nav on phone */

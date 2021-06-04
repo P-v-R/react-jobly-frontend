@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
+import Alert from "react-bootstrap/Alert";
+import { v4 as uuid } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass } from "@fortawesome/free-solid-svg-icons";
+
 import JoblyApi from "./api.js";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
-import Alert from "react-bootstrap/Alert";
-import { v4 as uuid } from "uuid";
 import UserContext from "./userContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCompass } from "@fortawesome/free-solid-svg-icons";
-import "./CompanyList.css"
+
+
 const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-greedy-man-holding-money.jpg";
 
 /**
@@ -23,6 +25,12 @@ const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-gr
  * renders :
  *      SearchForm -> searchCompany()
  *      CompanyCard -> one for each company in state
+ * 
+ * Context:
+ *   currentUser {object of info on current user}
+ * 
+ * TODO: add pagination to show 20 companies at a time
+ * TODO: option to show a list of companies user applied to
  */
 
 function CompanyList() {
@@ -30,6 +38,7 @@ function CompanyList() {
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
   const { currentUser } = useContext(UserContext);
 
   // console.log("companyList errors-->", errors);

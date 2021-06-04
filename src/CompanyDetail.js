@@ -7,6 +7,7 @@ import {v4 as uuid } from "uuid";
 import JoblyApi from "./api";
 import JobCardList from "./JobCardList";
 import UserContext from "./userContext";
+import "./CompanyDetail.css";
 
 /** Renders a companies details with job listing
  * 
@@ -17,12 +18,20 @@ import UserContext from "./userContext";
  * 
  * Params: 
  *    handle as { name }
+ * 
+ * Context:
+ *   currentUser {object of info on current user}
+ * 
+ * TODO: add a link to edit company form if user is admin. Edit 
+ *       company form would allow admin to change company information.
  */
 function CompanyDetail() {
   const { name } = useParams();
+
   const [company, setCompany] = useState({});
   const [jobs, setJobs] = useState([]);
   const [errors, setErrors] = useState([]);
+
   const { currentUser } = useContext(UserContext);
   
   
@@ -47,7 +56,7 @@ function CompanyDetail() {
   return (
     <div>
       { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null }
-      <Container>
+      <Container className="companyInfo">
         <h2>{company.name}</h2>
         <p>{company.description}</p>
       </Container>

@@ -6,10 +6,9 @@ import { Redirect } from 'react-router-dom'
 
 /** Sign up form for jobly
  * 
- * prop: registerFromForm() , currentUser 
+ * prop: registerUser , currentUser 
  * 
  * state: signUpFormData
- * 
  * 
  * App --> Routes --> SignUpForm
  */

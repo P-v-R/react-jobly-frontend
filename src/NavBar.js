@@ -1,13 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+
 import "./NavBar.css";
 
 /**
  * NavBar
  *  Props: 
  *    currentUser
- *    loginFromForm
- *    registerFromForm
  *    logout
  * 
  * will render full navBar if current user is defined(logged in)

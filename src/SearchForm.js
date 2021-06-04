@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import "./SearchForm.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearchDollar } from '@fortawesome/free-solid-svg-icons'
+
+import "./SearchForm.css"
 
 /** Generic Search Bar 
  * 
@@ -10,6 +11,8 @@ import { faSearchDollar } from '@fortawesome/free-solid-svg-icons'
  * 
  * state:
  *    term --> what is being searched for
+ * 
+ * TODO: add live search to update search results without submitting
 */
 function SearchForm({ search, defaultValue = "" }) {
   const [term, setTerm] = useState(defaultValue);
@@ -35,7 +38,7 @@ function SearchForm({ search, defaultValue = "" }) {
           type="search" className="form-control rounded"
           placeholder="Enter search term..." />
         <button className="btn">
-        <FontAwesomeIcon className="searchBtn" icon={faSearchDollar} size="lg"/>
+        <FontAwesomeIcon className="searchBtn" icon={faSearchDollar} size="2x"/>
         </button>
       </div>
     </form>

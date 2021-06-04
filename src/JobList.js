@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass } from "@fortawesome/free-solid-svg-icons";
+import Alert from "react-bootstrap/Alert";
+import {v4 as uuid} from "uuid";
+
 import JoblyApi from "./api.js";
 import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
-import Alert from "react-bootstrap/Alert";
-import {v4 as uuid} from "uuid";
 import UserContext from "./userContext";
 
 /**
@@ -24,6 +27,8 @@ import UserContext from "./userContext";
  * renders:
  *    SearchForm -> SearchJob()
  *    JobCard -> one for each job in state
+ * 
+ * TODO: add pagination to show 20 jobs at a time
  */
 
 function JobList() {
@@ -31,6 +36,7 @@ function JobList() {
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  
   const { currentUser } = useContext(UserContext);
 
   // gets array of all jobs from API
@@ -60,7 +66,12 @@ function JobList() {
     return (<Redirect to="/" />)
   }
 
-  if (isLoading) return <div></div>;
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center">
+        <FontAwesomeIcon className="spinnerIcon" icon={faCompass} size="10x"/>
+      </div>)
+  }
 
   return (
     <div>

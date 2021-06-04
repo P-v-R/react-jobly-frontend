@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuid } from "uuid"
+import Alert from "react-bootstrap/Alert";
+import { decode } from "jsonwebtoken";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass } from "@fortawesome/free-solid-svg-icons";
+
 import Routes from "./Routes";
 import NavBar from "./NavBar";
 import JoblyApi from "./api.js";
-import Alert from "react-bootstrap/Alert";
-import { decode } from "jsonwebtoken";
 import './App.css';
 
 /**
- * Need a docstring overhaul on this 
  * App()
  * state:
  *      currentUser 
- *      isLogin
- *      isRegister
  *      errors
- *      loginFormData
- *      registerFormData
+ *      token
+ *      isLoading
  *      
- * handles login signup functionality 
+ * handles: 
+ *      login
+ *      signup
+ *      logout 
+ *      edit profile
+ * 
+ * sets token in localStorage, decodes token to get currentUser.
  */
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -91,8 +97,11 @@ function App() {
   }
 
   // during initial render, wait for api calls to finish
-  if(isLoading){
-    return (<h1>Loading</h1>)
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center">
+        <FontAwesomeIcon className="spinnerIcon" icon={faCompass} size="10x"/>
+      </div>)
   }
 
   return (

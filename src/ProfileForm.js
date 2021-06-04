@@ -14,11 +14,11 @@ import { Redirect } from 'react-router-dom'
  */
 function ProfileForm({ editUser, currentUser }) {
   const [profileFormData, setProfileFormData] = useState({
-    "username": currentUser.username,
-    "firstName": currentUser.firstName,
-    "lastName": currentUser.lastName,
-    "email": currentUser.email,
-    "password": ""
+    username: currentUser.username,
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    email: currentUser.email,
+    password: ""
   });
 
   // handle/control user inputs
@@ -31,6 +31,7 @@ function ProfileForm({ editUser, currentUser }) {
   }
 
   // handle user submit and send data to parent component
+  // make edit user an async function, can empty pw before the async
   function handleSubmit(evt) {
     evt.preventDefault();
     editUser(profileFormData);
@@ -55,7 +56,7 @@ function ProfileForm({ editUser, currentUser }) {
             type="firstName"
             placeholder="firstName"
             name="firstName"
-            value={profileFormData["firstName"]}
+            value={profileFormData.firstName}
             onChange={handleChange} />
           <Form.Label>First name</Form.Label>
         </div>
@@ -64,7 +65,7 @@ function ProfileForm({ editUser, currentUser }) {
           <Form.Control
             type="lastName"
             name="lastName"
-            value={profileFormData["lastName"]}
+            value={profileFormData.lastName}
             onChange={handleChange} />
           <Form.Label>Last name</Form.Label>
         </div>
@@ -73,7 +74,7 @@ function ProfileForm({ editUser, currentUser }) {
           <Form.Control
             type="email"
             name="email"
-            value={profileFormData["email"]}
+            value={profileFormData.email}
             onChange={handleChange} />
           <Form.Label>Email</Form.Label>
         </div>
@@ -82,7 +83,7 @@ function ProfileForm({ editUser, currentUser }) {
           <Form.Control
             type="password"
             name="password"
-            value={profileFormData["password"]}
+            value={profileFormData.password}
             onChange={handleChange} />
           <Form.Label>Confirm password to make changes:</Form.Label>
         </div>

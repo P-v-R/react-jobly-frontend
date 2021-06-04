@@ -21,30 +21,31 @@ function NavBar({ currentUser, logout }) {
         Jobly
       </NavLink>
       {
-        (currentUser !== null) ?
-        <div className="w-75 p-3 mr-3">
-        <NavLink className="text" exact to="/companies">
-          Companies
-        </NavLink>
-        <NavLink className="text" exact to="/jobs">
-          Jobs
-        </NavLink>
-        <NavLink className="text" exact to="/profile">
-          Profile
-        </NavLink>
-        <NavLink className="text" exact to="/logout">
-          <span onClick={logout}>Logout { currentUser.username }</span>
-        </NavLink>
-        </div>
-        :
-        <div className="w-50 p-3 ">
-        <NavLink className="text" exact to="/login">
-          Login
-        </NavLink>
-        <NavLink className="text" exact to="/signup">
-          Sign up
-        </NavLink>
-        </div>
+        (currentUser !== null)
+          ?
+          <div className="w-75 p-3 mr-3">
+            <NavLink className="text" exact to="/companies">
+              Companies
+            </NavLink>
+            <NavLink className="text" exact to="/jobs">
+              Jobs
+            </NavLink>
+            <NavLink className="text" exact to="/profile">
+              Profile
+            </NavLink>
+            <NavLink className="text" exact to="/logout">
+              <span onClick={logout}>Logout {currentUser.username}</span>
+            </NavLink>
+          </div>
+          :
+          <div className="w-50 p-3 ">
+            <NavLink className="text" exact to="/login">
+              Login
+            </NavLink>
+            <NavLink className="text" exact to="/signup">
+              Sign up
+            </NavLink>
+          </div>
       }
     </nav>
 

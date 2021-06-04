@@ -35,6 +35,8 @@ function LoginForm({ logInUser, currentUser }) {
   return <Redirect to="/" />
   }
 
+  // Can change naming of password field for new password vs curr password
+  // for browser save
   return (
     <Container fluid="sm">
       <Form className="LoginForm" onSubmit={handleSubmit}>
@@ -43,7 +45,7 @@ function LoginForm({ logInUser, currentUser }) {
             type="username"
             placeholder="username"
             name="username"
-            value={loginFormData["username"]}
+            value={loginFormData.username}
             onChange={handleChange} />
           <Form.Label>Username</Form.Label>
         </div>
@@ -52,7 +54,7 @@ function LoginForm({ logInUser, currentUser }) {
             type="password"
             placeholder="Password"
             name="password"
-            value={loginFormData["password"]}
+            value={loginFormData.password}
             onChange={handleChange} />
           <Form.Label>Password</Form.Label>
         </div>

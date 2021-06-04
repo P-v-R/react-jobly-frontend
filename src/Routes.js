@@ -13,8 +13,11 @@ import UserContext from "./userContext";
 /** Routes for Jobly App
  * 
  * props: { currentUser, logInUser, registerUser, editUser }
+ * 
  */
 /** this is where our userObject is provided to all child components  */
+// TODO: can move UserContext to App()
+// TODO: change auth check to routes
 function Routes({ currentUser, logInUser, registerUser, editUser }) {
   return (
     <UserContext.Provider value={{ currentUser }}>
@@ -22,9 +25,9 @@ function Routes({ currentUser, logInUser, registerUser, editUser }) {
         <Route exact path="/">
           <Homepage currentUser={currentUser} />
         </Route>
-        <Route exact path="/companies">
+        {currentUser && <Route exact path="/companies">
           <CompanyList />
-        </Route>
+        </Route>}
         <Route exact path="/companies/:name">
           <CompanyDetail />
         </Route>

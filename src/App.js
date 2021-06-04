@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { v4 as uuid } from "uuid"
 import Alert from "react-bootstrap/Alert";
 import { decode } from "jsonwebtoken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +17,7 @@ import './App.css';
  *      currentUser 
  *      errors
  *      token
- *      isLoading
+ *      isLoading - wait for api call to complete
  *      
  * handles: 
  *      login
@@ -33,6 +32,9 @@ function App() {
   const [errors, setErrors] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
+  console.log("App", currentUser, errors, token, isLoading);
+
+  // TODO: token should be global constant
 
   // when token changes, token is decoded to get user information.
   // current user is set
@@ -41,6 +43,7 @@ function App() {
       if (token) {
         JoblyApi.token = token;
         const { username } = decode(token)
+        // TODO: Change getUser to fetchUser/fetchUserFromApi
         const userFromApi = await JoblyApi.getUser({ username })
         setCurrentUser(userFromApi);
       }
@@ -80,6 +83,7 @@ function App() {
   // edit profile
   async function editUser({ username, firstName, lastName, email, password }) {
     try {
+      // TODO explain why login is used here
       await JoblyApi.login({ username, password });
       await JoblyApi.editUser({ username, firstName, lastName, email, password });
       setErrors([]);
@@ -103,11 +107,11 @@ function App() {
         <FontAwesomeIcon className="spinnerIcon" icon={faCompass} size="10x"/>
       </div>)
   }
-
+// TODO: change key to errors everywhere
   return (
     <div className="App">
-      { errors ? errors.map(err =>
-        <Alert key={uuid()} variant="danger">{err}</Alert>)
+      { errors ? errors.map((err, idx) =>
+        <Alert key={idx} variant="danger">{err}</Alert>)
         : null
       }
       <BrowserRouter>

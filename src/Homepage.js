@@ -1,12 +1,14 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import { NavLink } from "react-router-dom";
 
 import "./Homepage.css";
 
-
+// TODO: add doc string
 function HomePage({ currentUser }) {
-
+// TODO: change ternary into two if statements
+// TODO: change buttons (in nav bar, and here) to links for single page app
   return (
     <div>
       { (currentUser) ?
@@ -23,6 +25,9 @@ function HomePage({ currentUser }) {
               href="/companies"
               variant="outline-primary">
               Companies</Button>
+            <NavLink className="btn btn-primary" exact to="/jobs">
+              Jobs
+            </NavLink>
             <Button
               className="homeButton"
               href="/jobs"

@@ -19,15 +19,13 @@ const TEMP_IMG_URL = "https://365psd.com/images/istock/previews/1687/16875125-gr
  *        searchTerm - the user input being searched for 
  *                      when <SearchForm /> is submitted
  *        errors - array of all errors if they occur
+ *        isLoading - waits for api call to complete
  * 
  * Route --> CompanyList --> SearchForm --> CompanyCard
  * 
  * renders :
  *      SearchForm -> searchCompany()
  *      CompanyCard -> one for each company in state
- * 
- * Context:
- *   currentUser {object of info on current user}
  * 
  * TODO: add pagination to show 20 companies at a time
  * TODO: option to show a list of companies user applied to
@@ -38,8 +36,6 @@ function CompanyList() {
   const [searchTerm, setSearchTerm] = useState();
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { currentUser } = useContext(UserContext);
 
   // console.log("companyList errors-->", errors);
   // console.log("companyList searchTerm-->", searchTerm);
@@ -59,10 +55,8 @@ function CompanyList() {
         setIsLoading(false);
       }
     }
-    if (currentUser) getCompanies();
-  }, [searchTerm, isLoading, currentUser])
-
-
+    getCompanies();
+  }, [searchTerm])
 
   // function to pass down to <SearchForm /> to retrieve search form value
   // and set searchTerm state with said value
@@ -82,11 +76,6 @@ function CompanyList() {
       handle={c.handle}
     />);
 
-  // if user is not logged in, redirects to homepage
-  if (currentUser === null) {
-    return (<Redirect to="/" />)
-  }
-
   if (isLoading) {
     return (
       <div className="d-flex justify-content-center">
@@ -96,11 +85,11 @@ function CompanyList() {
 
   return (
     <div>
-      { errors ? errors.map(err => <Alert key={uuid()} variant="danger">{err}</Alert>) : null}
+      { errors && errors.map((err, idx) => <Alert key={idx} variant="danger">{err}</Alert>)}
       <SearchForm search={searchCompany} defaultValue={searchTerm} />
-      {(companyCards.length === 0) ?
-        <h3>No Companies Found</h3> :
-        companyCards}
+      {(companyCards.length === 0)
+        ? <h3>No Companies Found</h3> 
+        : companyCards}
     </div>
   );
 }

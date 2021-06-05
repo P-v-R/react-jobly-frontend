@@ -90,6 +90,7 @@ function ProfileForm({ editUser, currentUser }) {
 
         <Button
           variant="primary"
+          type="submit"
           onClick={handleSubmit}>
           Save Changes
         </Button>

@@ -37,7 +37,8 @@ function SearchForm({ search, defaultValue = "" }) {
           onChange={handleChange}
           type="search" className="form-control rounded"
           placeholder="Enter search term..." />
-        <button className="btn">
+        <button className="btn"
+                type="submit">
         <FontAwesomeIcon className="searchBtn" icon={faSearchDollar} size="2x"/>
         </button>
       </div>

@@ -97,6 +97,7 @@ function SignUpForm({ registerUser, currentUser }) {
 
         <Button
           variant="primary"
+          type="submit"
           onClick={handleSubmit}>
           Submit
         </Button>

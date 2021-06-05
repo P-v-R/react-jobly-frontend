@@ -60,6 +60,7 @@ function LoginForm({ logInUser, currentUser }) {
         </div>
         <Button
           variant="primary"
+          type="submit"
           onClick={handleSubmit}>
           Submit
         </Button>
